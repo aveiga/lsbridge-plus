@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>LSBridge Plus</title>
+  </head>
+  <body>
+    <input id="tosend" />
+    <button id="sendBtn">Send</button>
+    <input id="toreceive" />
+    <!-- <script src="https://raw.githubusercontent.com/postaljs/postal.js/master/lib/postal.lodash.min.js"></script> -->
+    <script type="module">
+      import { LSBridge, Chanels } from "./dist/lib/lsbridge.bc.js";
+
+      let lsbridge = new LSBridge();
+
+      function setInputValue(data) {
+        document.querySelector("#toreceive").value = data;
+      }
+      function logMessages(data) {
+        console.log("Logging: " + data);
+      }
+
+      lsbridge.subscribe("demo", setInputValue);
+      lsbridge.subscribe("demo", logMessages);
+
+      document.querySelector("#sendBtn").onclick = function sendBtnClick(e) {
+        lsbridge.send("demo", document.querySelector("#tosend").value);
+        lsbridge.send(
+          "demo",
+          document.querySelector("#tosend").value,
+          Chanels.OWNTAB
+        );
+      };
+
+      setTimeout(() => {
+        lsbridge.unsubscribe("demo", setInputValue);
+      }, 7000);
+    </script>
+  </body>
+</html>
