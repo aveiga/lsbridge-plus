@@ -13,7 +13,8 @@ export class LSBridge {
         let dataToStore = {
             message: message,
             chanel: chanel,
-            ownerId: this.id
+            ownerId: this.id,
+            topic: topic
         };
         let bc = this.broadcastChanels.get(topic);
         if (bc) {
@@ -27,7 +28,7 @@ export class LSBridge {
             receiver.onmessage = (e) => {
                 let message = e.data;
                 //@ts-ignore
-                let topic = e.target.name;
+                let topic = message.topic;
                 (this.listeners.get(topic) || []).forEach((l) => {
                     if (message.chanel === Chanels.ALL) {
                         l.callback(message.message);

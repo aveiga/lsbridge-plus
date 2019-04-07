@@ -12,6 +12,7 @@ interface DataMessage {
   message: any;
   chanel: Chanels;
   ownerId: string;
+  topic: string;
 }
 
 interface BroadcasterReceiver {
@@ -34,7 +35,8 @@ export class LSBridge {
     let dataToStore: DataMessage = {
       message: message,
       chanel: chanel,
-      ownerId: this.id
+      ownerId: this.id,
+      topic: topic
     };
 
     let bc = this.broadcastChanels.get(topic);
@@ -51,7 +53,7 @@ export class LSBridge {
       receiver.onmessage = (e: MessageEvent) => {
         let message: DataMessage = e.data;
         //@ts-ignore
-        let topic = e.target.name;
+        let topic = message.topic;
 
         (this.listeners.get(topic) || []).forEach((l: Listener) => {
           if (message.chanel === Chanels.ALL) {

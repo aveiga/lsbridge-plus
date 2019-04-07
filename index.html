@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>LSBridge Plus</title>
+    <script src="./broadcastchannel-polyfill.js"></script>
   </head>
   <body>
     <input id="tosend" />
     <button id="sendBtn">Send</button>
     <input id="toreceive" />
-    <!-- <script src="https://raw.githubusercontent.com/postaljs/postal.js/master/lib/postal.lodash.min.js"></script> -->
     <script type="module">
       import { LSBridge, Chanels } from "./dist/lib/lsbridge.bc.js";
 
